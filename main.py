@@ -1,20 +1,14 @@
-from aiogram import Bot, Dispatcher, types
-from aiogram.types import Message
-from aiogram.enums import ParseMode
-from aiogram import F
+# main.py
 import asyncio
-import config
-import sheets
-
-bot = Bot(token=config.BOT_TOKEN, parse_mode=ParseMode.HTML)
-dp = Dispatcher()
-
-@dp.message(F.text == "/start")
-async def start(message: Message):
-    await message.answer("Salom! Buyurtma berish uchun tugmalar yaqin orada qo‘shiladi.")
+from aiogram import Bot, Dispatcher
+from config import BOT_TOKEN
+from handlers import router
 
 async def main():
+    bot = Bot(token=BOT_TOKEN)
+    dp = Dispatcher()
+    dp.include_router(router)
     await dp.start_polling(bot)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     asyncio.run(main())
